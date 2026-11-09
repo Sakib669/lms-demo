@@ -107,23 +107,23 @@ export default function CourseLearningPage() {
         {/* Progress Display */}
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <span className="text-[11px] font-bold text-slate-400 block">
+            <span className="text-[11px] font-mono font-bold text-slate-400 block tabular-nums">
               {progressPercent}% {isBn ? "সম্পন্ন" : "Completed"}
             </span>
           </div>
           <div className="w-24 sm:w-36 h-2 bg-slate-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-brand-orange to-emerald-500 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-[#0000F2] to-[#00D2FF] rounded-full transition-all duration-500"
               style={{ width: `${progressPercent}%` }}
             ></div>
           </div>
           {progressPercent === 100 && (
             <button
               onClick={() => setShowCertificate(true)}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold animate-bounce shadow-sm"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-mono font-bold animate-bounce shadow-sm"
             >
               <Award className="w-3.5 h-3.5" />
-              <span>{isBn ? "সার্টিফিকেট" : "Certificate"}</span>
+              <span>{isBn ? "সনদপত্র" : "Certificate"}</span>
             </button>
           )}
         </div>
@@ -151,10 +151,10 @@ export default function CourseLearningPage() {
           {/* Action Row Under Video */}
           <div className="p-4 sm:p-6 bg-slate-900 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <span className="text-xs font-bold text-brand-orange uppercase tracking-wider block">
-                {isBn ? "বর্তমান লেকচার" : "Current Lesson"}
+              <span className="text-xs font-mono font-bold text-[#00D2FF] uppercase tracking-wider block">
+                {isBn ? "বর্তমান লেকচার" : "Active Module"}
               </span>
-              <h3 className="text-base sm:text-lg font-black text-white mt-0.5">
+              <h3 className="text-base sm:text-lg font-bold text-white mt-0.5">
                 {activeLesson?.title}
               </h3>
             </div>
@@ -183,11 +183,11 @@ export default function CourseLearningPage() {
 
           {/* Tabs: Overview, Notes, Resources */}
           <div className="p-4 sm:p-6 flex-1 bg-slate-950 space-y-4">
-            <div className="flex border-b border-slate-800 gap-4 text-sm font-bold">
+            <div className="flex border-b border-slate-800 gap-4 text-xs sm:text-sm font-bold">
               <button
                 onClick={() => setActiveTab("overview")}
                 className={`pb-2 border-b-2 transition-colors ${
-                  activeTab === "overview" ? "border-brand-orange text-brand-orange" : "border-transparent text-slate-400 hover:text-slate-200"
+                  activeTab === "overview" ? "border-[#0000F2] text-[#00D2FF]" : "border-transparent text-slate-400 hover:text-slate-200"
                 }`}
               >
                 {isBn ? "লেকচার বিবরণ" : "Overview"}
@@ -195,16 +195,16 @@ export default function CourseLearningPage() {
               <button
                 onClick={() => setActiveTab("notes")}
                 className={`pb-2 border-b-2 transition-colors flex items-center gap-1.5 ${
-                  activeTab === "notes" ? "border-brand-orange text-brand-orange" : "border-transparent text-slate-400 hover:text-slate-200"
+                  activeTab === "notes" ? "border-[#0000F2] text-[#00D2FF]" : "border-transparent text-slate-400 hover:text-slate-200"
                 }`}
               >
                 <span>{isBn ? "আমার নোটস (অটোসেভ)" : "My Notes"}</span>
-                {noteText && <span className="w-2 h-2 rounded-full bg-brand-orange"></span>}
+                {noteText && <span className="w-2 h-2 rounded-full bg-[#00D2FF]"></span>}
               </button>
               <button
                 onClick={() => setActiveTab("resources")}
                 className={`pb-2 border-b-2 transition-colors ${
-                  activeTab === "resources" ? "border-brand-orange text-brand-orange" : "border-transparent text-slate-400 hover:text-slate-200"
+                  activeTab === "resources" ? "border-[#0000F2] text-[#00D2FF]" : "border-transparent text-slate-400 hover:text-slate-200"
                 }`}
               >
                 {isBn ? "রিসোর্স ও শিট" : "Resources"}

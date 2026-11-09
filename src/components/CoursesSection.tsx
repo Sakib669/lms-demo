@@ -1,22 +1,39 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useApp } from "@/context/AppContext";
 import { COURSES } from "@/data/mockData";
 import { Star, ArrowRight, ShoppingCart, Check, Eye } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CoursesSection() {
   const { language, addToCart, cart, enrolledCourseIds } = useApp();
   const isBn = language === "bn";
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filterTabs = [
+    { id: "all", labelBn: "সকল কোর্স", labelEn: "All Courses" },
+    { id: "আইন", labelBn: "আইন ও অধিকার", labelEn: "Legal Literacy" },
+    { id: "স্বাস্থ্য", labelBn: "স্বাস্থ্য ও পুষ্টি", labelEn: "Wellness Science" },
+    { id: "ট্যাক্স", labelBn: "ট্যাক্স ও অর্থব্যবস্থা", labelEn: "Tax & Finance" },
+  ];
+
+  const displayedCourses = COURSES.filter((c) => {
+    if (activeFilter === "all") return true;
+    return (
+      c.category.toLowerCase().includes(activeFilter.toLowerCase()) ||
+      c.categoryBn.toLowerCase().includes(activeFilter.toLowerCase())
+    );
+  });
 
   return (
     <section className="py-14 sm:py-16 bg-[#F8FAFC] dark:bg-[#070B14] border-b border-slate-200/60 dark:border-slate-800/80 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-9">
+        {/* Section Header & Interactive Filter Bar */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
           <div>
             <div className="text-[11px] font-bold tracking-wider uppercase text-[#0000F2] dark:text-[#00D2FF] mb-1">
               {isBn ? "ফ্ল্যাগশিপ কারিকুলাম" : "Flagship Series"}
@@ -29,18 +46,27 @@ export default function CoursesSection() {
             </p>
           </div>
 
-          <Link
-            href="/courses"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white transition-colors group self-start sm:self-auto"
-          >
-            <span>{isBn ? "সকল কোর্স দেখুন" : "View Full Catalog"}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          {/* Interactive Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 self-start lg:self-auto scrollbar-none">
+            {filterTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id)}
+                className={`relative px-3.5 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all ${
+                  activeFilter === tab.id
+                    ? "bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-bold shadow-sm"
+                    : "bg-white dark:bg-[#0B0F19] text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800"
+                }`}
+              >
+                {isBn ? tab.labelBn : tab.labelEn}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* 5-Column Course Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {COURSES.map((course) => {
+          {displayedCourses.map((course) => {
             const isInCart = cart.some((item) => item.id === course.id);
             const isEnrolled = enrolledCourseIds.includes(course.id);
 

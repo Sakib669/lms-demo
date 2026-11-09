@@ -2,9 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useApp } from "@/context/AppContext";
-import { Sparkles, ArrowRight, CheckCircle2, ShoppingBag } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, ShoppingBag, BookOpen, Layers } from "lucide-react";
 
 export default function MegaBundleBanner() {
   const { language, addToCart, cart } = useApp();
@@ -66,37 +65,38 @@ export default function MegaBundleBanner() {
 
             {/* Center Graphic: Book/Course Stack (4 cols) */}
             <div className="lg:col-span-4 flex items-center justify-center">
-              <div className="relative w-64 h-48 sm:w-72 sm:h-52">
+              <div className="relative w-72 h-52 flex items-center justify-center">
                 
-                {/* Book Stack Composition */}
-                <div className="absolute left-4 top-4 w-32 h-44 rounded-xl shadow-xl overflow-hidden border-2 border-white dark:border-slate-800 transform -rotate-12 hover:rotate-0 transition-transform">
-                  <Image
-                    src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=80"
-                    alt="Bundle Book 1"
-                    fill
-                    className="object-cover"
-                  />
+                {/* 3D Stack Graphic Card 1 */}
+                <div className="absolute left-2 top-4 w-32 h-44 rounded-xl shadow-xl overflow-hidden bg-gradient-to-tr from-blue-700 to-indigo-900 text-white p-3 border-2 border-white dark:border-slate-800 transform -rotate-12 hover:rotate-0 transition-transform">
+                  <span className="text-[9px] font-black text-amber-300 uppercase">E-BOOK</span>
+                  <div className="text-[11px] font-bold mt-2 leading-tight">পারিবারিক আইন সহায়িকা</div>
+                  <div className="absolute bottom-2 right-2 text-white/40">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
                 </div>
 
-                <div className="absolute right-4 top-2 w-32 h-44 rounded-xl shadow-xl overflow-hidden border-2 border-white dark:border-slate-800 transform rotate-12 hover:rotate-0 transition-transform">
-                  <Image
-                    src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
-                    alt="Bundle Book 2"
-                    fill
-                    className="object-cover"
-                  />
+                {/* 3D Stack Graphic Card 2 */}
+                <div className="absolute right-2 top-2 w-32 h-44 rounded-xl shadow-xl overflow-hidden bg-gradient-to-tr from-emerald-700 to-teal-900 text-white p-3 border-2 border-white dark:border-slate-800 transform rotate-12 hover:rotate-0 transition-transform">
+                  <span className="text-[9px] font-black text-emerald-300 uppercase">COURSE</span>
+                  <div className="text-[11px] font-bold mt-2 leading-tight">সুস্থ জীবন ও পুষ্টি বিজ্ঞান</div>
+                  <div className="absolute bottom-2 right-2 text-white/40">
+                    <Layers className="w-5 h-5" />
+                  </div>
                 </div>
 
-                <div className="absolute left-1/2 -translate-x-1/2 top-0 w-36 h-48 rounded-xl shadow-2xl overflow-hidden border-2 border-white dark:border-slate-800 z-10 hover:scale-105 transition-transform">
-                  <Image
-                    src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=400&q=80"
-                    alt="Bundle Main"
-                    fill
-                    className="object-cover"
-                  />
-                  {/* Badge */}
-                  <div className="absolute bottom-2 inset-x-2 py-1 bg-brand-orange/95 text-white text-[10px] font-black text-center rounded-md">
-                    78% OFF
+                {/* Main Hero Card in Center */}
+                <div className="relative w-36 h-48 rounded-xl shadow-2xl overflow-hidden bg-gradient-to-tr from-brand-orange via-amber-500 to-yellow-500 text-white p-3.5 border-2 border-white dark:border-slate-800 z-10 hover:scale-105 transition-transform flex flex-col justify-between">
+                  <div>
+                    <span className="px-2 py-0.5 rounded bg-black/40 text-[9px] font-black uppercase tracking-wider">
+                      ALL-IN-ONE
+                    </span>
+                    <div className="text-xs font-black mt-2 leading-tight">
+                      SkillForge Master Bundle
+                    </div>
+                  </div>
+                  <div className="p-1.5 bg-black/40 backdrop-blur-sm text-center rounded-lg text-[10px] font-black">
+                    78% SAVINGS
                   </div>
                 </div>
 

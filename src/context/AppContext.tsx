@@ -226,7 +226,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setCart((prev) => prev.filter((item) => item.id !== id));
     showToast(language === "bn" ? "কার্ট থেকে সরানো হয়েছে।" : "Item removed from cart.", "info");
   };
-  };
 
   const clearCart = () => setCart([]);
 
@@ -377,6 +376,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setReadingEbook,
         previewVideo,
         setPreviewVideo,
+        toast,
+        showToast,
+        hideToast,
       }}
     >
       {children}

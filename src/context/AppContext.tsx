@@ -62,6 +62,11 @@ interface AppContextType {
   setReadingEbook: (ebook: Ebook | null) => void;
   previewVideo: { title: string; videoUrl: string } | null;
   setPreviewVideo: (data: { title: string; videoUrl: string } | null) => void;
+
+  // Toast System
+  toast: { message: string; type?: "success" | "info" } | null;
+  showToast: (message: string, type?: "success" | "info") => void;
+  hideToast: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -80,7 +85,24 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [registeredWorkshopIds, setRegisteredWorkshopIds] = useState<string[]>([]);
   const [readingEbook, setReadingEbook] = useState<Ebook | null>(null);
   const [previewVideo, setPreviewVideo] = useState<{ title: string; videoUrl: string } | null>(null);
+  const [toast, setToast] = useState<{ message: string; type?: "success" | "info" } | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
+
+  const showToast = (message: string, type: "success" | "info" = "success") => {
+    setToast({ message, type });
+  };
+
+  const hideToast = () => {
+    setToast(null);
+  };
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => {
+      setToast(null);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   // Load from LocalStorage on mount
   useEffect(() => {
@@ -190,7 +212,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   // Cart operations
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
-      if (prev.some((i) => i.id === item.id)) return prev;
+      if (prev.some((i) => i.id === item.id)) {
+        showToast(language === "bn" ? "আইটেমটি ইতোমধ্যেই কার্টে রয়েছে।" : "Item is already in your cart.", "info");
+        return prev;
+      }
+      showToast(language === "bn" ? `কার্টে যুক্ত হয়েছে: ${item.titleBn || item.title}` : `Added to cart: ${item.title}`, "success");
       return [...prev, item];
     });
     setIsCartOpen(true);
@@ -198,6 +224,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const removeFromCart = (id: string) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
+    showToast(language === "bn" ? "কার্ট থেকে সরানো হয়েছে।" : "Item removed from cart.", "info");
+  };
   };
 
   const clearCart = () => setCart([]);

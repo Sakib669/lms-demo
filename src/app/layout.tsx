@@ -7,6 +7,7 @@ import CartDrawer from "@/components/CartDrawer";
 import AuthModal from "@/components/AuthModal";
 import BookReaderModal from "@/components/BookReaderModal";
 import VideoPreviewModal from "@/components/VideoPreviewModal";
+import Toast from "@/components/Toast";
 
 export const metadata: Metadata = {
   title: "SkillForge.com - জানুন • শিখুন • এগিয়ে যান | Practical Life Skills, Law & Tech",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <AuthModal />
           <BookReaderModal />
           <VideoPreviewModal />
+          <Toast />
         </AppProvider>
       </body>
     </html>

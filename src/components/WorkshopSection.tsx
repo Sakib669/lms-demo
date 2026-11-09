@@ -34,11 +34,18 @@ export default function WorkshopSection() {
             {/* Left Content (5 cols) */}
             <div className="lg:col-span-5 space-y-5">
               
-              {/* Live Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold tracking-wide">
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-                <span>● LIVE</span>
-                <span className="text-slate-300 font-medium">{isBn ? "ইন্টারেক্টিভ মাস্টারক্লাস" : "Executive Live Cohort"}</span>
+              {/* Live Badge & Countdown */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold tracking-wide">
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                  <span>● LIVE</span>
+                  <span className="text-slate-300 font-medium">{isBn ? "ইন্টারেক্টিভ মাস্টারক্লাস" : "Executive Live Cohort"}</span>
+                </div>
+
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300">
+                  <Clock className="w-3 h-3 text-[#00D2FF]" />
+                  <span>{isBn ? "শুরু হতে বাকি: ০৩ দিন ১৪ ঘন্টা" : "Starts in: 03d 14h 22m"}</span>
+                </div>
               </div>
 
               {/* Headline */}

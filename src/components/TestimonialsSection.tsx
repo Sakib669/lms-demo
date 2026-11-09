@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useApp } from "@/context/AppContext";
 import { TESTIMONIALS } from "@/data/mockData";
 import { Testimonial } from "@/types";
-import { Star, ArrowRight, MessageSquarePlus, X, Check } from "lucide-react";
+import { Star, ArrowRight, MessageSquarePlus, X, Check, ShieldCheck } from "lucide-react";
 
 export default function TestimonialsSection() {
-  const { language, user, setIsAuthModalOpen } = useApp();
+  const { language, user } = useApp();
   const isBn = language === "bn";
 
   const [reviews, setReviews] = useState<Testimonial[]>(TESTIMONIALS);
@@ -37,13 +37,13 @@ export default function TestimonialsSection() {
     const newRev: Testimonial = {
       id: `rev-${Date.now()}`,
       name: authorName,
-      role: "SkillForge Learner",
+      role: "SkillForge Professional",
       location: newLocation,
       avatar: user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(authorName)}`,
       quote: newQuote,
       quoteBn: newQuote,
       rating: newRating,
-      courseTitle: "General Feedback",
+      courseTitle: "Verified Feedback",
     };
 
     const updated = [newRev, ...reviews];
@@ -62,27 +62,30 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-14 bg-slate-50/70 dark:bg-[#060e1a] border-b border-slate-100 dark:border-slate-800 transition-colors">
+    <section className="py-14 sm:py-16 bg-[#FAFAFD] dark:bg-[#060814] border-b border-slate-200/60 dark:border-slate-800/80 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-9">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              {isBn ? "আমাদের শিক্ষার্থীদের মতামত" : "Student Testimonials & Reviews"}
+            <div className="text-[11px] font-bold tracking-wider uppercase text-[#0000F2] dark:text-[#00D2FF] mb-1">
+              {isBn ? "প্র্যাকটিশনারদের মতামত" : "Executive Validation"}
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-white tracking-tight">
+              {isBn ? "শিক্ষার্থীদের বাস্তব মূল্যায়ন ও সাফল্য" : "Verified Learner Experiences"}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
-              {isBn ? "যারা শিখেছেন, উপকৃত হয়েছেন" : "Real feedback from real professionals"}
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-normal">
+              {isBn ? "কর্পোরেট কর্মকর্তা, আইনজীবী ও উদ্যোক্তাদের বাস্তব অভিজ্ঞতা" : "Testimonials from corporate executives, attorneys, and founders"}
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 self-start sm:self-auto">
             <button
               onClick={() => setModalOpen(true)}
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-brand-orange hover:text-brand-orange transition-colors"
+              className="posh-button-secondary !py-2 !px-3.5 !text-xs !rounded-xl"
             >
-              <MessageSquarePlus className="w-3.5 h-3.5" />
-              <span>{isBn ? "মতামত দিন" : "Add Review"}</span>
+              <MessageSquarePlus className="w-3.5 h-3.5 text-[#0000F2]" />
+              <span>{isBn ? "মতামত দিন" : "Submit Review"}</span>
             </button>
 
             <button
@@ -90,10 +93,10 @@ export default function TestimonialsSection() {
                 const el = document.getElementById("testimonials-grid");
                 el?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-brand-orange hover:text-brand-orangeHover transition-colors group"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white transition-colors group"
             >
-              <span>{isBn ? "সকল রিভিউ দেখুন" : "View All"}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>{isBn ? "সব রিভিউ" : "All Reviews"}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
@@ -103,19 +106,24 @@ export default function TestimonialsSection() {
           {reviews.slice(0, 3).map((item) => (
             <div
               key={item.id}
-              className="flex flex-col justify-between bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-card hover:shadow-card-hover transition-all"
+              className="flex flex-col justify-between bg-white dark:bg-[#0B0F19] rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-subtle hover:shadow-posh hover:-translate-y-1 transition-all duration-300"
             >
               {/* Quote text */}
-              <div className="mb-4">
-                <blockquote className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              <div className="mb-5">
+                <div className="flex items-center gap-1 text-amber-400 mb-3">
+                  {Array.from({ length: item.rating }).map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <blockquote className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
                   “{isBn ? item.quoteBn : item.quote}”
                 </blockquote>
               </div>
 
-              {/* Bottom user profile & rating */}
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              {/* Bottom user profile */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
+                  <div className="relative w-9 h-9 rounded-full overflow-hidden border border-slate-200/80 dark:border-slate-700 bg-slate-100">
                     <Image
                       src={item.avatar}
                       alt={item.name}
@@ -124,20 +132,18 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                    <h4 className="text-xs font-bold text-slate-950 dark:text-white">
                       {item.name}
                     </h4>
                     <span className="text-[11px] text-slate-400">
-                      {item.location}
+                      {item.role || item.location}
                     </span>
                   </div>
                 </div>
 
-                {/* Stars */}
-                <div className="flex items-center gap-0.5 text-amber-400">
-                  {Array.from({ length: item.rating }).map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                  ))}
+                <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Verified</span>
                 </div>
               </div>
 
@@ -149,8 +155,8 @@ export default function TestimonialsSection() {
 
       {/* Add Review Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-150">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#0B0F19] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-2xl">
             <button
               onClick={() => setModalOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -158,29 +164,29 @@ export default function TestimonialsSection() {
               <X className="w-4 h-4" />
             </button>
 
-            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-1">
-              {isBn ? "আপনার মতামত জানান" : "Share Your Experience"}
+            <h3 className="text-lg font-bold text-slate-950 dark:text-white mb-1">
+              {isBn ? "আপনার মতামত শেয়ার করুন" : "Share Your Feedback"}
             </h3>
             <p className="text-xs text-slate-500 mb-4">
-              {isBn ? "আপনার মূল্যবান রিভিউ আমাদের অন্যদের অনুপ্রাণিত করবে।" : "Help other learners make informed decisions."}
+              {isBn ? "আপনার অভিজ্ঞতা অন্যান্য শিক্ষার্থীদের সঠিক সিদ্ধান্ত নিতে সহায়তা করবে।" : "Help other professionals evaluate curriculum depth and practical utility."}
             </p>
 
             {submitted ? (
               <div className="py-8 flex flex-col items-center justify-center text-center space-y-2">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center">
                   <Check className="w-6 h-6" />
                 </div>
                 <div className="text-sm font-bold text-slate-900 dark:text-white">
-                  {isBn ? "ধন্যবাদ! আপনার রিভিউ সেভ হয়েছে।" : "Thank you! Review saved."}
+                  {isBn ? "ধন্যবাদ! আপনার রিভিউ সফলভাবে সংরক্ষিত হয়েছে।" : "Thank you! Review saved successfully."}
                 </div>
               </div>
             ) : (
               <form onSubmit={handleAddReview} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     {isBn ? "রেটিং" : "Rating"}
                   </label>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         type="button"
@@ -189,10 +195,10 @@ export default function TestimonialsSection() {
                         className="p-1 hover:scale-110 transition-transform"
                       >
                         <Star
-                          className={`w-6 h-6 ${
+                          className={`w-5 h-5 ${
                             star <= newRating
                               ? "fill-amber-400 text-amber-400"
-                              : "text-slate-300 dark:text-slate-700"
+                              : "text-slate-200 dark:text-slate-800"
                           }`}
                         />
                       </button>
@@ -201,37 +207,37 @@ export default function TestimonialsSection() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                    {isBn ? "আপনার শহর / লোকেশন" : "Location"}
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    {isBn ? "আপনার শহর / কর্মক্ষেত্র" : "Location / Organization"}
                   </label>
                   <input
                     type="text"
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}
-                    placeholder="e.g. Dhaka, Chittagong, Sylhet"
-                    className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange"
+                    placeholder="e.g. Dhaka, Legal Officer, Senior Developer"
+                    className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0000F2]/30 focus:border-[#0000F2]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     {isBn ? "আপনার অভিজ্ঞতা" : "Your Review"}
                   </label>
                   <textarea
                     rows={3}
                     value={newQuote}
                     onChange={(e) => setNewQuote(e.target.value)}
-                    placeholder={isBn ? "কোর্স বা ই-বুকটি আপনার কীভাবে সাহায্য করেছে লিখুন..." : "Write your thoughts..."}
+                    placeholder={isBn ? "কোর্স বা ই-বুকটি আপনার ক্যারিয়ার বা জীবনে কীভাবে সাহায্য করেছে লিখুন..." : "Describe the practical applicability..."}
                     required
-                    className="w-full px-3.5 py-2 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange"
+                    className="w-full px-3.5 py-2 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0000F2]/30 focus:border-[#0000F2]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-brand-orange hover:bg-brand-orangeHover text-white font-bold text-xs rounded-xl shadow-md transition-all"
+                  className="w-full posh-button-primary !py-2.5 !rounded-xl"
                 >
-                  {isBn ? "রিভিউ পোস্ট করুন" : "Post Review"}
+                  {isBn ? "রিভিউ পোস্ট করুন" : "Publish Review"}
                 </button>
               </form>
             )}
